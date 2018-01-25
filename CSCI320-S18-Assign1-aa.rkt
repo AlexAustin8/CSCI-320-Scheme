@@ -3,13 +3,13 @@
 (define (make_list_of_size n e)
      (cond
         ((eqv? n 0) e)
-        (else (make_list_of_size2 (- n 1) (cons e '())))
+        (else (aux_make_list_of_size (- n 1) (cons e '())))
         )
   )
-(define (make_list_of_size2 n e)
+(define (aux_make_list_of_size n e)
      (cond
         ((eqv? n 0) e)
-        (else (make_list_of_size2 (- n 1) (cons (car e) e) ))
+        (else (aux_make_list_of_size (- n 1) (cons (car e) e) ))
         )
   )
 
@@ -18,15 +18,15 @@
 (define (zeros list)
       (cond
         ((null? list) 0)
-        (else(zeros2 list 0))
+        (else(aux_zeros list 0))
         )
   )
 
-(define (zeros2 list count)
+(define (aux_zeros list count)
   (cond
     ((null? list) count)
-        ((eqv? (car list) 0) (zeros2 (cdr list) (+ count 1)))
-        (else (zeros2 (cdr list) count))
+        ((eqv? (car list) 0) (aux_zeros (cdr list) (+ count 1)))
+        (else (aux_zeros (cdr list) count))
         )
   )
 
@@ -36,14 +36,14 @@
   (cond
     ((eqv? b 0) 1)
     ((eqv? a 0) 0)
-    ((> b 0) (powerpos a b a))
-    (else (powerpos (/ 1 a) (abs b) ( / 1 a)))
+    ((> b 0) (aux_power a b a))
+    (else (aux_power (/ 1 a) (abs b) ( / 1 a)))
     )
   )
-(define (powerpos a b sum)
+(define (aux_power a b sum)
   (cond
   ((eqv? b 1) sum)
-  (else (powerpos a (- b 1) (* sum a)))
+  (else (aux_power a (- b 1) (* sum a)))
   )
  )
 
@@ -51,29 +51,29 @@
 (define (remove lst atom)
   (cond
     ((null? lst) '())
-    (else (reverse (remove2 lst '() atom)))
+    (else (reverse (aux_remove lst '() atom)))
     )
   )
 
-(define (remove2 lst newlst atom)
+(define (aux_remove lst newlst atom)
   (cond
   ((null? lst) newlst)
-  ((eqv? (car lst) atom) (remove2 (cdr lst) newlst atom))
-  (else (remove2 (cdr lst)  (cons (car lst) newlst) atom))
+  ((eqv? (car lst) atom) (aux_remove (cdr lst) newlst atom))
+  (else (aux_remove (cdr lst)  (cons (car lst) newlst) atom))
     )
   )
 
 (define (reverse lst)
   (cond
     ((null? lst) lst)
-    (else (reverse2 lst '()))
+    (else (aux_reverse lst '()))
     )
   )
 
-(define (reverse2 lst newlst)
+(define (aux_reverse lst newlst)
   (cond
     ((null? lst) newlst)
-    (else (reverse2 (cdr lst) (cons (car lst) newlst)))
+    (else (aux_reverse (cdr lst) (cons (car lst) newlst)))
     )
   )
   
@@ -86,15 +86,15 @@
   (cond
     ((null? lst) '())
     ((eqv? (list? lst) #f) 0)
-    (else (largest2 lst (car lst)))
+    (else (aux_largest lst (car lst)))
     )
   )
 
-(define (largest2 lst max)
+(define (aux_largest lst max)
   (cond
     ((null? lst) max)
-    ((> (car lst) max) (largest2 (cdr lst) (car lst)))
-    (else (largest2 (cdr lst) max))
+    ((> (car lst) max) (aux_largest (cdr lst) (car lst)))
+    (else (aux_largest (cdr lst) max))
     )
 )
 
